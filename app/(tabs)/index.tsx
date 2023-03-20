@@ -1,31 +1,26 @@
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
+import React, { useContext, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import tw from "twrnc";
+import { View } from "react-native";
+import { PhotoContext } from "../../PhotoContext";
+import { PhotoList } from "../../components/PhotoList";
 
 export default function TabOneScreen() {
+  const { photos, setPhotos } = useContext(PhotoContext);
+
+  const getPhotos = async () => {
+    const photoStorage = (await AsyncStorage.getItem("photos")) || "[]";
+    const photos = JSON.parse(photoStorage);
+    setPhotos(photos);
+  };
+
+  useEffect(() => {
+    getPhotos();
+  }, []);
+
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
+    <View style={tw`items-center min-h-full bg-green-100`}>
+      <PhotoList photos={[...photos]} />
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});
