@@ -43,10 +43,9 @@ export default function ModalsScreen() {
 
   const takePicture = async () => {
     if (cameraRef.current) {
-      const options = { quality: 0.8 };
       const userLocation = await Location.getCurrentPositionAsync();
       const photo: PhotoType = {
-        uri: (await cameraRef.current.takePictureAsync(options)).uri,
+        uri: (await cameraRef.current.takePictureAsync({ quality: 0.8 })).uri,
         latitude: userLocation.coords.latitude,
         longitude: userLocation.coords.longitude,
       };
@@ -72,6 +71,12 @@ export default function ModalsScreen() {
           <Text style={tw`text-white`}>Flip Camera</Text>
         </TouchableOpacity>
 
+        <TouchableOpacity
+          style={tw`px-3 py-2 rounded-lg border border-gray-300`}
+          onPress={() => setPhotos([])}
+        >
+          <Text style={tw`text-white`}>Clear Pictures</Text>
+        </TouchableOpacity>
         <TouchableOpacity
           style={tw`px-3 py-2 rounded-lg border border-gray-300`}
           onPress={takePicture}

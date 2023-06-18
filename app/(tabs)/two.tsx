@@ -3,6 +3,7 @@ import MapView from "react-native-maps";
 import { StyleSheet, View } from "react-native";
 import { MapCard } from "../../components/MapCard";
 import { PhotoContext } from "../../PhotoContext";
+import { Image } from "react-native";
 
 type PhotoType = {
   uri: string;

@@ -19,7 +19,13 @@ export const PhotoList: React.FC<PhotoListProps> = ({ photos = [] }) => {
           <Image
             key={photo.uri}
             source={{ uri: photo.uri }}
-            style={{ width: 200, height: 300 }}
+            style={{
+              width: "100%",
+              aspectRatio: 1,
+              resizeMode: "contain",
+              marginTop: 15,
+              marginBottom: 15,
+            }}
           />
         );
       })}

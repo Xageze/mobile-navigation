@@ -9,6 +9,7 @@ type PhotoPorps = {
   latitude: number;
   longitude: number;
 };
+
 export const MapCard: React.FC<PhotoPorps> = ({ uri, latitude, longitude }) => {
   return (
     <>
@@ -17,14 +18,28 @@ export const MapCard: React.FC<PhotoPorps> = ({ uri, latitude, longitude }) => {
         <Callout>
           <Text style={tw`text-black w-full`}>Longitude : {longitude}</Text>
           <Text style={tw`text-black w-full`}>Latitude : {latitude}</Text>
-          <View style={tw`w-full bg-red-200`}>
-            <Text style={tw`relative w-full bg-blue-200`}>
-              <Image
-                source={{ uri: uri }}
-                style={tw`absolute bg-green-200 bottom-0 w-full h-full`}
-              />
-            </Text>
-          </View>
+          <Image
+            style={{
+              width: 100,
+              height: 100,
+              zIndex: 10,
+            }}
+            source={{
+              uri: "https://reactnative.dev/img/tiny_logo.png",
+            }}
+          />
+          {/* <Image
+            key={uri}
+            source={{ uri: uri }}
+            style={{
+              width: "100%",
+              aspectRatio: 1,
+              resizeMode: "contain",
+              marginTop: 15,
+              marginBottom: 15,
+            }}
+            onError={(e) => console.log(e.nativeEvent.error)}
+          /> */}
         </Callout>
       </Marker>
     </>
