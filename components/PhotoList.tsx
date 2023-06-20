@@ -1,5 +1,5 @@
 import React from "react";
-import { Image } from "react-native";
+import { Image, Text } from "react-native";
 
 type PhotoType = {
   uri: string;
@@ -14,6 +14,7 @@ type PhotoListProps = {
 export const PhotoList: React.FC<PhotoListProps> = ({ photos = [] }) => {
   return (
     <>
+      {photos.length === 0 && <Text>No photos</Text>}
       {photos.map((photo: PhotoType) => {
         return (
           <Image

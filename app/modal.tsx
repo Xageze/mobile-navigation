@@ -1,5 +1,5 @@
 import { Camera, CameraType } from "expo-camera";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Text, View, TouchableOpacity, Image, ScrollView } from "react-native";
 import { useContext, useEffect, useRef, useState } from "react";
 import tw from "twrnc";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -56,34 +56,61 @@ export default function ModalsScreen() {
 
   return (
     <View>
-      <Camera
-        type={type}
-        ref={(camera) => {
-          cameraRef.current = camera;
-        }}
-        style={{ width: "100%", height: "80%" }}
-      />
-      <View style={tw`pt-6 flex flex-row justify-around gap-4 py-4`}>
-        <TouchableOpacity
-          style={tw`px-3 py-2 rounded-lg border border-gray-300`}
-          onPress={toggleCameraType}
+      <View>
+        <Camera
+          type={type}
+          ref={(camera) => {
+            cameraRef.current = camera;
+          }}
+          style={{ width: "100%", aspectRatio: 3 / 4 }}
+        />
+        <View
+          style={tw`pt-6 px-2 flex flex-row justify-around items-center gap-2`}
         >
-          <Text style={tw`text-white`}>Flip Camera</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={tw`px-3 py-2 rounded-lg border border-gray-300`}
+            onPress={toggleCameraType}
+          >
+            <Text style={tw`text-white`}>Flip Camera</Text>
+          </TouchableOpacity>
 
-        <TouchableOpacity
-          style={tw`px-3 py-2 rounded-lg border border-gray-300`}
-          onPress={() => setPhotos([])}
-        >
-          <Text style={tw`text-white`}>Clear Pictures</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={tw`px-3 py-2 rounded-lg border border-gray-300`}
-          onPress={takePicture}
-        >
-          <Text style={tw`text-white`}>Take Picture</Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={tw`px-3 py-2 rounded-lg border border-gray-300`}
+            onPress={() => setPhotos([])}
+          >
+            <Text style={tw`text-white`}>Clear Pictures</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={tw`px-3 py-2 rounded-lg border border-gray-300`}
+            onPress={takePicture}
+          >
+            <Text style={tw`text-white`}>Take Picture</Text>
+          </TouchableOpacity>
+        </View>
       </View>
+      <ScrollView
+        horizontal
+        contentContainerStyle={tw`flex-grow`}
+        style={tw`flex mt-4`}
+      >
+        <View style={tw`flex flex-row`}>
+          {photos.length === 0 && <Text>No photos</Text>}
+          {photos.map((photo: PhotoType) => {
+            return (
+              <Image
+                key={photo.uri}
+                source={{ uri: photo.uri }}
+                style={{
+                  width: "24%",
+                  aspectRatio: 3 / 4,
+                  resizeMode: "contain",
+                  marginLeft: 15,
+                }}
+              />
+            );
+          })}
+        </View>
+      </ScrollView>
     </View>
   );
 }
